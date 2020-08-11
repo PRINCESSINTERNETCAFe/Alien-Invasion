@@ -2,13 +2,16 @@ import sys
 
 import pygame as pyg
 
+from settings import Settings
+
 class AlienInvasion:
     #Overall class to manage game assets and behaviour
 
     def __init__(self):
         #Initialise the game and create its resources
         pyg.init()
-        self.screen = pyg.display.set_mode((1200, 800))
+        self.settings = Settings()
+        self.screen = pyg.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pyg.display.set_caption("Alien Invasion")
 
         #Set background colour
@@ -23,7 +26,7 @@ class AlienInvasion:
                     sys.exit()
             
             #Redraw the screen during each pass trhough the loop
-            self.screen.fill(self.bg_color)
+            self.screen.fill(self.settings.bg_color)
             
             # #Make the most recently drawn screen visible
             pyg.display.flip()
