@@ -19,12 +19,13 @@ class AlienInvasion:
         self.ship = Ship(self)
 
         #Set background colour
-        self.bg_color = (230, 230, 230)
+        self.bg_color = self.settings.bg_color
     
     def run_game(self):
         #Start the main loop for the game
         while True:
             self._check_events()
+            self.ship.update()
             self._update_screen()
     
     def _check_events(self):
@@ -32,6 +33,22 @@ class AlienInvasion:
             for event in pyg.event.get():
                 if event.type == pyg.QUIT:
                     sys.exit()
+                elif event.type == pyg.KEYDOWN:
+                    if event.key == pyg.K_RIGHT:
+                        #Move the ship to the right
+                        self.ship.moving_right = True
+                    elif event.key == pyg.K_LEFT:
+                        #Move the ship to the left
+                        self.ship.moving_left = True
+
+                elif event.type == pyg.KEYUP:
+                    if event.key == pyg.K_RIGHT:
+                        #Stop moving the ship
+                        self.ship.moving_right = False
+                    elif event.key == pyg.K_LEFT:
+                        #Stop moving the ship
+                        self.ship.moving_left = False
+
     
     def _update_screen(self):
     #Update images on the screen and flip to the new screen
