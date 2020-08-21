@@ -72,7 +72,8 @@ class AlienInvasion:
             #Reset the game statistics
             self.stats.reset_stats()
             self.stats.game_active = True
-            #Hide the mouse cursos
+            self.sb.prep_score()
+            #Hide the mouse cursor
             pyg.mouse.set_visible(False)
 
         #Get rid of any remaining aliens and bullets
@@ -126,6 +127,11 @@ class AlienInvasion:
         #Respond to bullet-alien collisions
         #Remove any bullets and aliens that have collided
         collisions = pyg.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
 
         if not self.aliens:
             #Destroy existing bullets and create new fleet
